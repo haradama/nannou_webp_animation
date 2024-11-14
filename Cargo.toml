@@ -12,7 +12,7 @@ repository = "https://github.com/haradama/nannou_webp_animation"
 
 readme = "README.md"
 
-keywords = ["webp", "animation", "nannou", "creative coding", "graphics"]
+keywords = ["webp", "animation", "nannou", "graphics"]
 categories = ["graphics", "multimedia", "animation"]
 license = "MIT"
 
