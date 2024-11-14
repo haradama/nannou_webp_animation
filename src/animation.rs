@@ -1,6 +1,7 @@
 use crate::decoder::WebpDecoder;
 use crate::frame::WebpFrame;
 use nannou::prelude::*;
+use nannou::wgpu::Texture;
 use std::path::Path;
 use std::time::Instant;
 
@@ -15,7 +16,7 @@ pub struct WebpAnimation {
     /// Indicates whether the animation should loop when it reaches the end.
     is_looping: bool,
     /// Textures for each frame, generated from the images in the animation.
-    textures: Vec<wgpu::Texture>,
+    textures: Vec<Texture>,
 }
 
 impl WebpAnimation {
@@ -44,10 +45,10 @@ impl WebpAnimation {
             return Err("No frames found in the animation".to_string());
         }
 
-        // Create textures from images
-        let textures: Vec<wgpu::Texture> = frames
+        // Create textures from images using Nannou's Texture
+        let textures: Vec<Texture> = frames
             .iter()
-            .map(|frame| wgpu::Texture::from_image(app, &frame.image))
+            .map(|frame| Texture::from_image(app, &frame.image))
             .collect();
 
         Ok(Self {
@@ -80,31 +81,38 @@ impl WebpAnimation {
         }
     }
 
-    /// Draws the current frame of the animation to the screen.
+    /// Returns a reference to the current texture.
     ///
-    /// # Arguments
+    /// # Returns
     ///
-    /// * `draw` - A reference to the Nannou `Draw` instance for rendering.
-    /// * `position` - Position where the animation should be drawn.
-    /// * `scale` - Scale factor for the animation size.
-    /// * `rotation` - Rotation angle (in radians) for the animation.
-    pub fn draw(&self, draw: &Draw, position: Point2, scale: f32, rotation: f32) {
-        if let Some(texture) = self.textures.get(self.current_frame_index) {
-            draw.texture(texture)
-                .x_y(position.x, position.y)
-                .w_h(
-                    texture.size()[0] as f32 * scale,
-                    texture.size()[1] as f32 * scale,
-                )
-                .rotate(rotation);
-        }
+    /// A reference to the `Texture` of the current frame.
+    pub fn texture(&self) -> &Texture {
+        &self.textures[self.current_frame_index]
+    }
+
+    /// Returns the width of the current frame.
+    ///
+    /// # Returns
+    ///
+    /// The width (in pixels) of the current frame's texture.
+    pub fn width(&self) -> u32 {
+        self.texture().size()[0]
+    }
+
+    /// Returns the height of the current frame.
+    ///
+    /// # Returns
+    ///
+    /// The height (in pixels) of the current frame's texture.
+    pub fn height(&self) -> u32 {
+        self.texture().size()[1]
     }
 
     /// Sets whether the animation should loop after reaching the final frame.
     ///
-    /// # Arguments
+    /// # Parameters
     ///
-    /// * `looping` - If `true`, the animation will loop indefinitely. If `false`, it will stop at the last frame.
+    /// - `looping`: If `true`, the animation will loop indefinitely. If `false`, it will stop at the last frame.
     pub fn set_looping(&mut self, looping: bool) {
         self.is_looping = looping;
     }

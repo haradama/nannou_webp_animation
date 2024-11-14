@@ -1,55 +1,51 @@
 use nannou::prelude::*;
 use nannou_webp_animation::WebpAnimation;
 
-fn main() {
-    nannou::app(model).update(update).view(view).run();
-}
-
 struct Model {
     animation: WebpAnimation,
-    rotation: f32,
-    angular_velocity: f32,
-    scale: f32,
 }
 
 fn model(app: &App) -> Model {
     // Create a new window
-    app.new_window().size(800, 600).build().unwrap();
+    app.new_window().view(view).build().unwrap();
 
     // Load the WEBP animation
-    let assets = app.assets_path().unwrap();
-    let webp_path = assets.join("animation.webp"); // Ensure 'animation.webp' is in the assets directory
+    let assets = app.assets_path().expect("Failed to find assets directory");
+    let webp_path = assets.join("animation.webp"); // Place 'animation.webp' in the 'assets' directory
 
     // Initialize the animation
     let animation =
         WebpAnimation::from_file(&webp_path, app).expect("Failed to load WEBP animation");
 
-    Model {
-        animation,
-        rotation: 0.0,
-        angular_velocity: 0.01, // Adjust as needed
-        scale: 1.0,
-    }
+    Model { animation }
 }
 
 fn update(_app: &App, model: &mut Model, _update: Update) {
-    // Update the animation frames
+    // Update the animation
     model.animation.update();
-
-    // Update rotation
-    model.rotation += model.angular_velocity;
 }
 
 fn view(app: &App, model: &Model, frame: Frame) {
-    // Prepare to draw
+    // Clear the frame
+    frame.clear(BLACK);
+
+    let win = app.window_rect();
+
+    // Define the rectangle where the animation will be drawn
+    let r = Rect::from_w_h(
+        model.animation.width() as f32,
+        model.animation.height() as f32,
+    )
+    .top_left_of(win);
+
     let draw = app.draw();
-    draw.background().color(WHITE);
+    draw.texture(model.animation.texture())
+        .xy(r.xy())
+        .wh(r.wh());
 
-    // Draw the animation with rotation and scaling
-    model
-        .animation
-        .draw(&draw, pt2(0.0, 0.0), model.scale, model.rotation);
-
-    // Render the frame
     draw.to_frame(app, &frame).unwrap();
+}
+
+fn main() {
+    nannou::app(model).update(update).run();
 }
