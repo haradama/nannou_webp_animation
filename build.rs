@@ -1,5 +1,3 @@
-// build.rs
-
 extern crate bindgen;
 
 use std::env;
