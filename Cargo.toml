@@ -1,0 +1,12 @@
+[package]
+name = "nannou_webp_animation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+libc = "0.2.162"
+nannou = "0.19.0"
+
+[build-dependencies]
+bindgen = "0.70.1"
+pkg-config = "0.3.31"
