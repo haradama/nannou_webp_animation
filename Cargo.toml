@@ -2,6 +2,22 @@
 name = "nannou_webp_animation"
 version = "0.1.0"
 edition = "2021"
+authors = ["Masafumi Harada"]
+
+description = "A Rust library for decoding and rendering animated WebP images using the nannou creative coding framework."
+
+documentation = "https://docs.rs/nannou_webp_animation/"
+homepage = "https://github.com/haradama/nannou_webp_animation"
+repository = "https://github.com/haradama/nannou_webp_animation"
+
+readme = "README.md"
+
+keywords = ["webp", "animation", "nannou", "creative coding", "graphics"]
+categories = ["graphics", "multimedia", "animation"]
+license = "MIT"
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [dependencies]
 libc = "0.2.162"
