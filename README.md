@@ -93,7 +93,8 @@ fn model(app: &App) -> Model {
 
     // Load the WEBP animation
     let assets = app.assets_path().expect("Failed to find assets directory");
-    let webp_path = assets.join("animation.webp"); // Place 'animation.webp' in the 'assets' directory
+    // Place 'animation.webp' in the 'assets' directory
+    let webp_path = assets.join("animation.webp");
 
     // Initialize the animation
     let animation =

@@ -15,7 +15,7 @@ fn main() {
 
     // Initialize bindgen builder
     let mut builder = bindgen::Builder::default()
-        .header("wrapper.h") // Path to your wrapper header
+        .header("wrapper.h")
         .generate_comments(true)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .derive_default(true)

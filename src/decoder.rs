@@ -11,6 +11,7 @@ use std::slice;
 use libc::c_int;
 
 // Include the generated bindings
+#[allow(dead_code)]
 #[allow(non_snake_case, non_camel_case_types, non_upper_case_globals)]
 mod bindings {
     #![allow(improper_ctypes)]
@@ -71,7 +72,7 @@ impl WebpDecoder {
             };
 
             // Create a demuxer for the WebP data
-            let demux = WebPDemux(&data);
+            let demux = webp_demux(&data);
             if demux.is_null() {
                 return Err("Failed to create WebPDemuxer".to_string());
             }
@@ -82,7 +83,6 @@ impl WebpDecoder {
 
             // Get the total number of frames in the animation
             let frame_count = WebPDemuxGetI(demux, WebPFormatFeature_WEBP_FF_FRAME_COUNT);
-            println!("Number of frames: {}", frame_count);
 
             if frame_count == 0 {
                 WebPDemuxDelete(demux);
@@ -204,7 +204,7 @@ impl WebpDecoder {
 /// # Returns
 ///
 /// A pointer to the `WebPDemuxer` if successful.
-unsafe fn WebPDemux(data: &WebPData) -> *mut WebPDemuxer {
+unsafe fn webp_demux(data: &WebPData) -> *mut WebPDemuxer {
     WebPDemuxInternal(
         data,
         0,
