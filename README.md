@@ -30,7 +30,7 @@ A Rust library for decoding and rendering animated WebP images using the [nannou
 
 #### macOS
 
-Install `libwebp` and `pkg-config` using Homebrew:
+Install `libwebp` and `pkg-config` using Homebrew.
 
 ```bash
 brew install webp pkg-config
@@ -38,7 +38,7 @@ brew install webp pkg-config
 
 #### Ubuntu/Debian
 
-Install the required packages:
+Install the required packages.
 
 ```bash
 sudo apt-get update
@@ -47,7 +47,7 @@ sudo apt-get install libwebp-dev pkg-config
 
 #### Fedora
 
-Install the dependencies:
+Install the dependencies.
 
 ```bash
 sudo dnf install libwebp-devel pkgconf-pkg-config
@@ -55,29 +55,51 @@ sudo dnf install libwebp-devel pkgconf-pkg-config
 
 #### Arch Linux
 
-Install the necessary packages:
+Install the necessary packages.
 
 ```bash
 sudo pacman -S libwebp pkgconf
 ```
 
+#### Windows
+
+Install the required packages using MSYS2.
+
+1. **Download and Install MSYS2**
+
+   Visit the [MSYS2 website](https://www.msys2.org/) and follow the installation instructions.
+
+2. **Update Package Database and Core Packages**
+
+   Open the **MSYS2 MinGW 64-bit** terminal and run.
+
+   ```bash
+   pacman -Syu
+   ```
+
+   If prompted, close and reopen the terminal, then run the command again.
+
+3. **Install Dependencies**
+
+   ```bash
+   pacman -S mingw-w64-x86_64-libwebp mingw-w64-x86_64-pkg-config
+   ```
+
 ### Adding to Your Project
 
-Add the following to your `Cargo.toml`:
+Add the following to your `Cargo.toml`.
 
 ```toml
 [dependencies]
 nannou = "0.19.0" # Or the latest version
-libc = "0.2.162"
+nannou_webp_animation = "0.2.0"
 ```
-
-Clone this repository and include it as a local dependency if needed.
 
 ## Usage
 
 ### Loading and Displaying an Animated WebP
 
-Here's a basic example of how to use `nannou_webp_animation` in your application:
+Here's a basic example of how to use `nannou_webp_animation` in your application.
 
 ```rust
 use nannou::prelude::*;
@@ -132,7 +154,6 @@ fn view(app: &App, model: &Model, frame: Frame) {
 fn main() {
     nannou::app(model).update(update).run();
 }
-
 ```
 
 Place your animated WebP file named `animation.webp` inside an `assets` directory at the root of your project.
