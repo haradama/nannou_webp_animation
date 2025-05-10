@@ -1,6 +1,6 @@
 [package]
 name = "nannou_webp_animation"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["Masafumi Harada"]
 
